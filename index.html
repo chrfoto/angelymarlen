@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda de Marlen & Angel</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'off-white': '#FAFAF9',
+                        'cream': '#F5F5F4',
+                        'dusty-rose': '#D6C5B3',
+                        'sand': '#E7E5E4',
+                        'sage': '#8A8583',
+                        'charcoal': '#292524'
+                    },
+                    fontFamily: {
+                        'cinzel': ['Cinzel', 'serif'],
+                        'cormorant': ['Cormorant Garamond', 'serif'],
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Animations */
+        body {
+            /* Texture + Gradient Overlay (Updated with Tapiz) */
+            background-color: #FAFAF9;
+            background-image: linear-gradient(to bottom, rgba(250,250,249,0.85), rgba(245,245,244,0.95)), url('https://i.imgur.com/E7fjftv.png');
+            background-attachment: fixed;
+            background-repeat: repeat;
+        }
+
+        .glassmorphism {
+            background: rgba(250, 250, 249, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(41, 37, 36, 0.08);
+        }
+
+        .glass-dark {
+            background: rgba(41, 37, 36, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Falling Leaves Animation */
+        #leaves-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .leaf {
+            position: absolute;
+            top: -10%;
+            animation: fall linear infinite, sway ease-in-out infinite alternate;
+            fill: #8A8583;
+            opacity: 0.5;
+        }
+
+        @keyframes fall {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+
+        @keyframes sway {
+            0% { transform: translateX(0px) rotate(0deg); }
+            100% { transform: translateX(50px) rotate(45deg); }
+        }
+
+        /* Splash Screen Transition */
+        #splash-screen {
+            transition: opacity 1s ease-in-out, visibility 1s;
+        }
+        
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Audio Bars */
+        .bar {
+            width: 3px;
+            height: 4px;
+            background: white;
+            border-radius: 2px;
+            animation: bounce 1s infinite alternate;
+            display: inline-block;
+            margin: 0 1px;
+        }
+        .bar:nth-child(2) { animation-delay: 0.2s; }
+        .bar:nth-child(3) { animation-delay: 0.4s; }
+        .bar.paused { animation-play-state: paused; height: 4px !important; }
+
+        @keyframes bounce {
+            0% { height: 4px; }
+            100% { height: 16px; }
+        }
+
+        /* Bounce Down Arrow */
+        @keyframes bounce-down {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+        .animate-bounce-down {
+            animation: bounce-down 2s infinite;
+        }
+
+        /* Toast */
+        .toast {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Smooth fade for parallax backgrounds */
+        .bg-fixed {
+            transition: background-position 0.3s ease-out;
+        }
+
+        /* Tabs para Panel Admin */
+        .tab-btn.active {
+            border-bottom: 2px solid #8A8583;
+            color: #292524;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="text-charcoal font-cormorant antialiased overflow-x-hidden relative">
+
+    <!-- Leaf Animation Container -->
+    <div id="leaves-container"></div>
+
+    <!-- 1. Splash Screen -->
+    <div id="splash-screen" class="fixed inset-0 z-50 bg-off-white flex flex-col items-center justify-center">
+        <div class="text-center p-8 max-w-lg mx-auto">
+            <!-- Minimal Floral SVG -->
+            <svg class="w-24 h-24 mx-auto mb-6 text-sage" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12,2C12,2 14.5,4.5 14.5,8C14.5,10.8 12.6,13 12,13.5C11.4,13 9.5,10.8 9.5,8C9.5,4.5 12,2 12,2 M12,13.5C12,13.5 15.5,15.5 18,15.5C20.8,15.5 22,12.5 22,12.5C22,12.5 19.5,10 16,10C13.2,10 12,13.5 12,13.5 M12,13.5C12,13.5 8.5,15.5 6,15.5C3.2,15.5 2,12.5 2,12.5C2,12.5 4.5,10 8,10C10.8,10 12,13.5 12,13.5 M12,13.5L12,22" stroke="currentColor" stroke-width="0.5" fill="none"/>
+            </svg>
+            <h1 class="font-cinzel text-4xl md:text-5xl text-charcoal mb-4">Marlen & Angel</h1>
+            <p id="guest-greeting" class="font-montserrat text-sm tracking-[0.2em] text-sage uppercase mb-8 hidden">Para: <span id="guest-name"></span></p>
+            <button onclick="openInvitation()" class="glassmorphism font-montserrat text-sm uppercase tracking-widest px-8 py-3 rounded-full hover:bg-white/60 transition duration-300 text-charcoal shadow-sm">
+                Abrir Invitación
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content" class="relative z-10 hidden">
+        
+        <!-- 2. Hero Section -->
+        <section class="relative h-screen w-full flex flex-col justify-between items-center overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://lh3.googleusercontent.com/d/1DCGMOqPgwpMDgizlNVsNL-XJXPC78cXJ');"></div>
+            <!-- Gradient to blend foreground and background smoothly -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/40"></div>
+            
+            <div class="relative z-10 pt-24 px-6 text-center text-off-white reveal">
+                <p class="font-montserrat text-sm uppercase tracking-[0.3em] mb-4 text-cream">Nuestra Boda</p>
+                <h1 class="font-cinzel text-5xl md:text-7xl font-semibold mb-2 drop-shadow-md">Marlen</h1>
+                <p class="font-cormorant text-4xl italic mb-2 text-dusty-rose">&</p>
+                <h1 class="font-cinzel text-5xl md:text-7xl font-semibold drop-shadow-md">Angel</h1>
+            </div>
+
+            <div class="relative z-10 pb-12 flex flex-col items-center reveal">
+                <p class="font-montserrat text-xs tracking-[0.2em] text-off-white uppercase mb-4 shadow-sm">Deslizar hacia abajo</p>
+                <i class="fas fa-chevron-down text-off-white text-2xl animate-bounce-down drop-shadow-md"></i>
+            </div>
+        </section>
+
+        <!-- 3. Foto Intermedia 1 (Primer Plano) -->
+        <section class="py-12 px-6 flex justify-center reveal">
+            <div class="max-w-4xl w-full">
+                <img src="https://lh3.googleusercontent.com/d/1jgQlr8ut5MOrA03-xlYnxLQ99f8zM5tN" alt="Marlen y Angel" class="w-full h-auto rounded-3xl shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sage/20 object-contain">
+            </div>
+        </section>
+
+        <!-- 4. Bloque de Inspiración -->
+        <section class="py-24 px-6 relative">
+            <div class="max-w-2xl mx-auto text-center glassmorphism p-10 md:p-16 rounded-3xl reveal">
+                <i class="fas fa-quote-left text-sage text-2xl mb-6 opacity-50"></i>
+                <p class="font-cormorant italic text-2xl md:text-3xl leading-relaxed text-charcoal mb-6">
+                    «Aprendemos a amar no cuando encontramos a la persona perfecta, sino cuando llegamos a ver de manera perfecta a una persona imperfecta.»
+                </p>
+                <i class="fas fa-quote-right text-sage text-2xl mt-2 opacity-50"></i>
+            </div>
+        </section>
+
+        <!-- Foto Intermedia 2 (Primer Plano) -->
+        <section class="py-12 px-6 flex justify-center reveal">
+            <div class="max-w-4xl w-full">
+                <img src="https://lh3.googleusercontent.com/d/1CxK5hLq93bBk0aBudlqS1lCehgMuxsZy" alt="Nuestra Boda" class="w-full h-auto rounded-3xl shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sage/20 object-contain">
+            </div>
+        </section>
+
+        <!-- 5. Cuenta Regresiva -->
+        <section class="py-24 px-6 relative bg-cover bg-center bg-local md:bg-fixed" style="background-image: url('https://lh3.googleusercontent.com/d/1oKOxwDVxxuIEbW_DwOkCCvZpspN8WCSv');">
+            <div class="absolute inset-0 bg-cream/85 backdrop-blur-sm"></div>
+            <div class="relative z-10 max-w-4xl mx-auto text-center reveal">
+                <h2 class="font-cinzel text-3xl md:text-4xl text-charcoal mb-2">05 de Diciembre 2026</h2>
+                <p class="font-montserrat text-sm tracking-widest text-sage mb-12 uppercase">Faltan</p>
+                
+                <div class="flex justify-center gap-4 md:gap-8 font-montserrat">
+                    <div class="glassmorphism w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl">
+                        <span id="days" class="text-3xl md:text-5xl font-semibold text-charcoal">00</span>
+                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-sage mt-2">Días</span>
+                    </div>
+                    <div class="glassmorphism w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl">
+                        <span id="hours" class="text-3xl md:text-5xl font-semibold text-charcoal">00</span>
+                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-sage mt-2">Hrs</span>
+                    </div>
+                    <div class="glassmorphism w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl">
+                        <span id="minutes" class="text-3xl md:text-5xl font-semibold text-charcoal">00</span>
+                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-sage mt-2">Min</span>
+                    </div>
+                    <div class="glassmorphism w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl">
+                        <span id="seconds" class="text-3xl md:text-5xl font-semibold text-charcoal">00</span>
+                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-sage mt-2">Seg</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Padres y Padrinos -->
+        <section class="py-24 px-6 text-center">
+            <div class="reveal">
+                <h2 class="font-cinzel text-3xl text-charcoal mb-4">Con la bendición de Dios</h2>
+                <p class="font-cormorant italic text-xl text-sage mb-12">y de nuestros padres</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
+                <div class="glassmorphism p-8 rounded-3xl reveal" style="transition-delay: 100ms;">
+                    <h3 class="font-montserrat text-xs uppercase tracking-[0.2em] text-charcoal/50 mb-6">Padres de la Novia</h3>
+                    <p class="font-cormorant text-2xl text-charcoal mb-2">Guadalupe Hernandez Zavala</p>
+                    <div class="w-8 h-px bg-sage mx-auto my-3"></div>
+                    <p class="font-cormorant text-2xl text-charcoal">Daniel Ortiz Cisneros</p>
+                </div>
+                <div class="glassmorphism p-8 rounded-3xl reveal" style="transition-delay: 200ms;">
+                    <h3 class="font-montserrat text-xs uppercase tracking-[0.2em] text-charcoal/50 mb-6">Padres del Novio</h3>
+                    <p class="font-cormorant text-2xl text-charcoal mb-2">Graciela Orozco Rodriguez</p>
+                    <div class="w-8 h-px bg-sage mx-auto my-3"></div>
+                    <p class="font-cormorant text-2xl text-charcoal">Jacinto González García</p>
+                </div>
+            </div>
+
+            <div class="max-w-lg mx-auto glassmorphism p-8 rounded-3xl reveal">
+                <h3 class="font-montserrat text-xs uppercase tracking-[0.2em] text-charcoal/50 mb-6">Padrinos de Velación</h3>
+                <p class="font-cormorant text-2xl text-charcoal mb-2">Emilia Orozco Rodriguez</p>
+                <div class="w-8 h-px bg-sage mx-auto my-3"></div>
+                <p class="font-cormorant text-2xl text-charcoal">Josefina Corona Chavez</p>
+            </div>
+        </section>
+
+        <!-- Foto Intermedia 3 (Primer Plano) -->
+        <section class="py-12 px-6 flex justify-center reveal">
+            <div class="max-w-4xl w-full">
+                <img src="https://lh3.googleusercontent.com/d/1wlxBezXUCinogXNS5wq7O3jPDoBZ7hBk" alt="Marlen y Angel" class="w-full h-auto rounded-3xl shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sage/20 object-contain">
+            </div>
+        </section>
+
+        <!-- 7. La Celebración -->
+        <section class="py-24 px-6 relative">
+            <h2 class="font-cinzel text-4xl text-center text-charcoal mb-16 reveal">La Celebración</h2>
+            
+            <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-center gap-8">
+                
+                <!-- Tarjeta Ceremonia (Siempre Visible y sin foto) -->
+                <div class="flex-1 glassmorphism rounded-3xl overflow-hidden flex flex-col reveal" style="transition-delay: 100ms;">
+                    <div class="p-10 text-center flex-1 flex flex-col items-center justify-center border border-white/50 rounded-3xl">
+                        <i class="fas fa-church text-4xl text-sage mb-6"></i>
+                        <h3 class="font-cinzel text-2xl text-charcoal mb-3">Ceremonia Religiosa</h3>
+                        <p class="font-montserrat text-sm tracking-widest text-charcoal/70 mb-2">05 de Diciembre 2026</p>
+                        <p class="font-montserrat text-sm tracking-widest text-charcoal/70 mb-6">1:00 PM</p>
+                        
+                        <p class="font-cormorant text-2xl text-charcoal font-semibold mb-2">Parroquia de Fátima</p>
+                        <p class="font-montserrat text-sm text-charcoal/60 mb-10 flex-1">Morelia, Michoacán</p>
+                        
+                        <div class="flex flex-col gap-4 w-full max-w-xs mx-auto">
+                            <a href="https://maps.app.goo.gl/eAwcaFtfTaLeH2kZ8" target="_blank" class="w-full bg-sage text-white font-montserrat text-xs uppercase tracking-widest py-4 rounded-full hover:bg-charcoal transition duration-300 shadow-md">Ver Ubicación</a>
+                            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Marlen+y+Angel+(Ceremonia)&dates=20261205T190000Z/20261205T200000Z&details=Ceremonia+Religiosa&location=Parroquia+de+F%C3%A1tima" target="_blank" class="w-full border border-sage text-sage font-montserrat text-xs uppercase tracking-widest py-4 rounded-full hover:bg-sage hover:text-white transition duration-300">Agendar Evento</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Recepción (Sin foto) -->
+                <div class="flex-1 glassmorphism rounded-3xl overflow-hidden flex flex-col reveal" style="transition-delay: 250ms;">
+                    <div class="p-10 text-center flex-1 flex flex-col items-center justify-center border border-white/50 rounded-3xl">
+                        <i class="fas fa-glass-cheers text-4xl text-sage mb-6"></i>
+                        <h3 class="font-cinzel text-2xl text-charcoal mb-3">Recepción</h3>
+                        <p class="font-montserrat text-sm tracking-widest text-charcoal/70 mb-2">05 de Diciembre 2026</p>
+                        <p class="font-montserrat text-sm tracking-widest text-charcoal/70 mb-6">4:00 PM</p>
+                        
+                        <p class="font-cormorant text-2xl text-charcoal font-semibold mb-2">Quinta el Palmar</p>
+                        <p class="font-montserrat text-sm text-charcoal/60 mb-10 flex-1">Morelia, Michoacán</p>
+                        
+                        <div class="flex flex-col gap-4 w-full max-w-xs mx-auto">
+                            <a href="https://maps.app.goo.gl/LgyHPckp2S68xLoz5" target="_blank" class="w-full bg-sage text-white font-montserrat text-xs uppercase tracking-widest py-4 rounded-full hover:bg-charcoal transition duration-300 shadow-md">Ver Ubicación</a>
+                            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Marlen+y+Angel+(Recepci%C3%B3n)&dates=20261205T220000Z/20261206T050000Z&details=Recepci%C3%B3n&location=Quinta+el+Palmar" target="_blank" class="w-full border border-sage text-sage font-montserrat text-xs uppercase tracking-widest py-4 rounded-full hover:bg-sage hover:text-white transition duration-300">Agendar Evento</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Itinerario -->
+        <section class="py-24 px-6 bg-sand/20">
+            <h2 class="font-cinzel text-4xl text-center text-charcoal mb-16 reveal">Itinerario</h2>
+            <div class="max-w-xl mx-auto relative">
+                <!-- Línea central -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-sage/40"></div>
+                
+                <!-- Items (Con delay progresivo para transición) -->
+                <div class="space-y-16">
+                    <div class="flex items-center justify-between w-full relative reveal" style="transition-delay: 100ms;">
+                        <div class="w-5/12 text-right pr-4">
+                            <p class="font-montserrat text-sm font-semibold text-charcoal">4:00 PM</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-cream border-2 border-sage flex items-center justify-center z-10 relative text-sage shadow-md">
+                            <i class="fas fa-map-marker-alt text-lg"></i>
+                        </div>
+                        <div class="w-5/12 pl-4 text-left">
+                            <p class="font-cormorant text-2xl text-charcoal">Recepción</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between w-full relative reveal" style="transition-delay: 300ms;">
+                        <div class="w-5/12 text-right pr-4">
+                            <p class="font-cormorant text-2xl text-charcoal">Entrada de Novios</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-cream border-2 border-sage flex items-center justify-center z-10 relative text-sage shadow-md">
+                            <i class="fas fa-heart text-lg"></i>
+                        </div>
+                        <div class="w-5/12 pl-4 text-left">
+                            <p class="font-montserrat text-sm font-semibold text-charcoal">5:00 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between w-full relative reveal" style="transition-delay: 500ms;">
+                        <div class="w-5/12 text-right pr-4">
+                            <p class="font-montserrat text-sm font-semibold text-charcoal">5:30 PM</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-cream border-2 border-sage flex items-center justify-center z-10 relative text-sage shadow-md">
+                            <i class="fas fa-utensils text-lg"></i>
+                        </div>
+                        <div class="w-5/12 pl-4 text-left">
+                            <p class="font-cormorant text-2xl text-charcoal">Comida</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between w-full relative reveal" style="transition-delay: 700ms;">
+                        <div class="w-5/12 text-right pr-4">
+                            <p class="font-cormorant text-2xl text-charcoal">Pirotecnia y Banda</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-cream border-2 border-sage flex items-center justify-center z-10 relative text-sage shadow-md">
+                            <i class="fas fa-music text-lg"></i>
+                        </div>
+                        <div class="w-5/12 pl-4 text-left">
+                            <p class="font-montserrat text-sm font-semibold text-charcoal">9:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Código de Vestimenta -->
+        <section class="py-24 px-6 text-center">
+            <div class="max-w-2xl mx-auto glassmorphism p-12 rounded-3xl reveal border border-white/60">
+                <!-- Iconos de Vestimenta Uniformes -->
+                <div class="flex justify-center gap-6 mb-6 text-sage">
+                    <i class="fas fa-user-tie text-5xl"></i>
+                    <i class="fas fa-female text-5xl"></i>
+                </div>
+                <h2 class="font-cinzel text-3xl text-charcoal mb-4">Código de Vestimenta</h2>
+                <p class="font-montserrat text-lg font-semibold tracking-widest uppercase text-charcoal mb-4">Formal</p>
+                <div class="w-16 h-px bg-sage mx-auto mb-6"></div>
+                <p class="font-cormorant text-lg text-charcoal/80 leading-relaxed">
+                    Les solicitamos amablemente <b>evitar</b> el uso de los colores verde y gris (reservados para damas y caballeros de honor), y por supuesto el <b>blanco</b> (reservado solo para la novia).
+                </p>
+            </div>
+        </section>
+        
+        <!-- Foto Intermedia 4 (Primer Plano) -->
+        <section class="py-12 px-6 flex justify-center reveal">
+            <div class="max-w-4xl w-full">
+                <img src="https://lh3.googleusercontent.com/d/1B3Gy8M-31ZH1u1krhARHc95j66ftbjyR" alt="Marlen y Angel" class="w-full h-auto rounded-3xl shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sage/20 object-contain">
+            </div>
+        </section>
+
+        <!-- 10. Mesa de Regalos -->
+        <section class="py-24 px-6 relative reveal">
+            <h2 class="font-cinzel text-4xl text-center text-charcoal mb-4">Mesa de Regalos</h2>
+            <p class="font-cormorant text-xl text-center text-sage mb-12">El mejor regalo es su presencia, pero si desean tener un detalle con nosotros:</p>
+            
+            <div class="max-w-md mx-auto glassmorphism p-8 rounded-3xl text-center">
+                <i class="fas fa-gift text-3xl text-dusty-rose mb-4"></i>
+                <p class="font-montserrat text-sm uppercase tracking-widest text-charcoal/50 mb-6">Transferencia Bancaria</p>
+                
+                <h3 class="font-cinzel text-xl text-charcoal mb-2">NU BANK</h3>
+                <p class="font-montserrat text-lg text-charcoal font-semibold tracking-wider mb-2" id="clabe-number">638180000111060742</p>
+                <p class="font-cormorant text-lg text-charcoal/80 mb-8">Angel Jonathan Gonzalez Orozco</p>
+                
+                <button onclick="copyToClipboard('638180000111060742')" class="w-full border border-sage text-sage font-montserrat text-xs uppercase tracking-widest py-3 rounded-full hover:bg-sage hover:text-white transition duration-300 flex items-center justify-center gap-2">
+                    <i class="far fa-copy"></i> Copiar Número
+                </button>
+            </div>
+        </section>
+
+        <!-- 11. Galería de Fotos (Rediseño Estilo Álbum Editorial) -->
+        <section class="py-32 px-6 bg-cream relative overflow-hidden">
+            <h2 class="font-cinzel text-4xl text-center text-charcoal mb-16 reveal relative z-10">Nuestros Momentos</h2>
+            
+            <div class="max-w-4xl mx-auto relative reveal z-10">
+                <!-- Marco estilo álbum físico -->
+                <div class="bg-white p-4 md:p-8 rounded-sm shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sand transform md:-rotate-1 transition duration-500 hover:rotate-0">
+                    
+                    <!-- Contenedor de la foto -->
+                    <div class="relative h-[55vh] md:h-[70vh] w-full flex items-center justify-center bg-sand/30 overflow-hidden border border-sage/20">
+                        <!-- Fondo desenfocado dinámico para que no se vea vacío a los lados -->
+                        <div class="absolute inset-0 opacity-40 bg-cover bg-center blur-2xl transform scale-110" id="gallery-bg-blur" style="background-image: url('https://lh3.googleusercontent.com/d/1bSuCj9m1R0zcRLZhU2bxvT6Z1iw2I4aD')"></div>
+                        
+                        <img id="gallery-img" src="https://lh3.googleusercontent.com/d/1bSuCj9m1R0zcRLZhU2bxvT6Z1iw2I4aD" class="relative z-10 max-w-full max-h-full object-contain drop-shadow-xl transition-opacity duration-500" alt="Momentos">
+                    </div>
+                    
+                    <!-- Controles elegantes -->
+                    <div class="mt-8 flex justify-between items-center px-2">
+                        <button onclick="changePhoto(-1)" class="text-sage hover:text-charcoal transition font-montserrat text-xs md:text-sm tracking-[0.2em] uppercase flex items-center gap-2 group">
+                            <i class="fas fa-long-arrow-alt-left transition-transform group-hover:-translate-x-1"></i> Anterior
+                        </button>
+                        
+                        <div id="gallery-counter" class="font-cormorant italic text-xl md:text-2xl text-charcoal">
+                            1 / 6
+                        </div>
+                        
+                        <button onclick="changePhoto(1)" class="text-sage hover:text-charcoal transition font-montserrat text-xs md:text-sm tracking-[0.2em] uppercase flex items-center gap-2 group">
+                            Siguiente <i class="fas fa-long-arrow-alt-right transition-transform group-hover:translate-x-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Foto Intermedia 5 (Primer Plano) -->
+        <section class="py-12 px-6 flex justify-center reveal">
+            <div class="max-w-4xl w-full">
+                <img src="https://lh3.googleusercontent.com/d/1wfdjqoiQ7qaBcqOC2qHWtrudlV_Cgc1P" alt="Marlen y Angel" class="w-full h-auto rounded-3xl shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sage/20 object-contain">
+            </div>
+        </section>
+
+        <!-- 12. Formulario RSVP -->
+        <section class="py-24 px-6 relative" id="rsvp">
+            <div class="reveal">
+                <h2 class="font-cinzel text-4xl text-center text-charcoal mb-4">Confirma tu Asistencia</h2>
+                <p class="font-cormorant text-xl text-center text-sage mb-12">Favor de confirmar antes del 15/11/2026</p>
+            </div>
+            
+            <div class="max-w-lg mx-auto glassmorphism p-8 md:p-12 rounded-3xl relative overflow-hidden reveal">
+                
+                <form id="rsvp-form" onsubmit="submitRSVP(event)" class="space-y-6">
+                    <div>
+                        <label class="block font-montserrat text-xs uppercase tracking-widest text-charcoal/70 mb-2">Nombre Completo</label>
+                        <input type="text" id="rsvp-name" required class="w-full bg-white/50 border border-sage/30 rounded-lg px-4 py-3 font-montserrat text-sm text-charcoal focus:outline-none focus:border-sage transition">
+                    </div>
+                    
+                    <div>
+                        <label class="block font-montserrat text-xs uppercase tracking-widest text-charcoal/70 mb-2">Teléfono Celular</label>
+                        <input type="tel" id="rsvp-phone" required class="w-full bg-white/50 border border-sage/30 rounded-lg px-4 py-3 font-montserrat text-sm text-charcoal focus:outline-none focus:border-sage transition">
+                    </div>
+
+                    <div>
+                        <label class="block font-montserrat text-xs uppercase tracking-widest text-charcoal/70 mb-2">Pases Confirmados</label>
+                        <div id="passes-info" class="hidden mb-2 text-sm text-sage font-montserrat">Tienes <span id="reserved-passes"></span> pases reservados.</div>
+                        <select id="rsvp-passes" required class="w-full bg-white/50 border border-sage/30 rounded-lg px-4 py-3 font-montserrat text-sm text-charcoal focus:outline-none focus:border-sage transition appearance-none">
+                            <option value="">Selecciona cantidad</option>
+                            <option value="1">1 Pase</option>
+                            <option value="2">2 Pases</option>
+                            <option value="3">3 Pases</option>
+                            <option value="4">4 Pases</option>
+                            <option value="5">5 Pases</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full bg-sage text-white font-montserrat text-sm uppercase tracking-widest py-4 rounded-xl hover:bg-charcoal transition duration-300 shadow-md">
+                        Confirmar Asistencia
+                    </button>
+                    
+                    <div class="text-center mt-6">
+                        <p class="font-montserrat text-xs text-charcoal/50">Dudas o problemas contactar a:</p>
+                        <p class="font-montserrat text-sm text-sage">4435358250 / 4434190902</p>
+                    </div>
+                </form>
+
+                <!-- Thanks Message (Hidden) -->
+                <div id="rsvp-thanks" class="hidden absolute inset-0 glassmorphism flex flex-col items-center justify-center p-8 text-center z-10">
+                    <i class="fas fa-check-circle text-5xl text-sage mb-4"></i>
+                    <h3 class="font-cinzel text-2xl text-charcoal mb-2">¡Gracias!</h3>
+                    <p class="font-cormorant text-lg text-charcoal/80">Tu asistencia ha sido confirmada con éxito. Nos vemos en la boda.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Audio Player -->
+    <div class="fixed bottom-6 right-6 z-40 hidden" id="audio-container">
+        <button onclick="toggleAudio()" class="w-14 h-14 rounded-full glass-dark text-white flex items-center justify-center shadow-lg hover:scale-105 transition-transform backdrop-blur-md border border-white/20">
+            <div id="audio-bars" class="flex items-end h-4 gap-[2px]">
+                <span class="bar paused"></span>
+                <span class="bar paused"></span>
+                <span class="bar paused"></span>
+            </div>
+        </button>
+        <!-- Integración de música desde Dropbox (dl=1 y dl.dropboxusercontent.com) -->
+        <audio id="bg-audio" loop preload="auto">
+            <source src="https://dl.dropboxusercontent.com/scl/fi/60mr8pskg1vde39xo0zpw/Qu-M-s-Puedo-Pedir-Bonus-Track.mp3?rlkey=8ashneym8vmj96fg3b8lwj5vj&st=yq8odeiy&dl=1" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Admin Panel Button (Conditional) -->
+    <button id="btn-admin" onclick="toggleAdminModal()" class="hidden fixed bottom-6 left-6 z-40 w-12 h-12 rounded-full glass-dark text-sage flex items-center justify-center shadow-lg hover:text-white transition-colors">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- Admin Modal -->
+    <div id="admin-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-charcoal/80 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
+        <div class="glassmorphism w-full max-w-md p-6 md:p-8 rounded-3xl relative transform scale-95 transition-transform duration-300 bg-off-white" id="admin-modal-content">
+            <button onclick="toggleAdminModal()" class="absolute top-4 right-4 text-charcoal/50 hover:text-charcoal"><i class="fas fa-times text-xl"></i></button>
+            <h3 class="font-cinzel text-2xl text-charcoal mb-4 text-center">Panel de Control</h3>
+            
+            <!-- Tabs Navigation -->
+            <div class="flex justify-center border-b border-sage/30 mb-6 font-montserrat text-xs uppercase tracking-widest text-charcoal/50">
+                <button onclick="switchAdminTab('generator')" id="tab-btn-generator" class="tab-btn active px-4 py-2 transition-colors">Generador</button>
+                <button onclick="switchAdminTab('rsvps')" id="tab-btn-rsvps" class="tab-btn px-4 py-2 transition-colors">Confirmados</button>
+            </div>
+
+            <!-- Tab: Generador -->
+            <div id="tab-generator" class="space-y-4 font-montserrat text-sm">
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-charcoal/70 mb-1">Nombre (Opcional)</label>
+                    <input type="text" id="gen-name" class="w-full bg-white border border-sage/30 rounded-lg px-3 py-2 outline-none focus:border-sage" placeholder="Ej. Familia Pérez">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-charcoal/70 mb-1">Límite de Pases (0-10)</label>
+                    <input type="number" id="gen-passes" min="0" max="10" value="0" class="w-full bg-white border border-sage/30 rounded-lg px-3 py-2 outline-none focus:border-sage">
+                    <p class="text-[10px] text-charcoal/50 mt-1">0 = Sin límite (muestra 1-5)</p>
+                </div>
+                <button onclick="generateLink()" class="w-full bg-sage text-white py-3 rounded-lg uppercase tracking-wider text-xs hover:bg-charcoal transition shadow mt-4">
+                    Generar y Copiar Enlace
+                </button>
+                <div class="mt-4 break-all text-xs text-center text-sage font-medium h-10" id="gen-result"></div>
+            </div>
+
+            <!-- Tab: Confirmados (Firebase) -->
+            <div id="tab-rsvps" class="hidden flex flex-col h-64">
+                <div class="flex justify-between items-center mb-4 font-montserrat">
+                    <span class="text-xs uppercase tracking-widest text-charcoal/70">Total Pases:</span>
+                    <span class="text-lg font-semibold text-charcoal" id="admin-total-passes">0</span>
+                </div>
+                <div id="admin-rsvp-list" class="flex-1 overflow-y-auto space-y-2 pr-2 font-montserrat">
+                    <p class="text-xs text-center text-charcoal/50 mt-10"><i class="fas fa-spinner fa-spin text-2xl mb-2"></i><br>Cargando datos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-[60] flex flex-col gap-2 pointer-events-none w-full max-w-xs px-4"></div>
+
+    <!-- Firebase SDK (Module) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { /* Fallback configs if not in immersive */ };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+
+        // Initialize Authentication
+        async function initAuth() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                currentUser = auth.currentUser;
+                
+                // Si es admin, cargamos la lista de inmediato
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('admin') === '1') {
+                    loadRSVPs();
+                }
+            } catch (error) {
+                console.error("Auth error:", error);
+            }
+        }
+        initAuth();
+
+        // Reemplazamos la función nativa con la de Firebase
+        window.submitRSVP = async function(e) {
+            e.preventDefault();
+            
+            if (!currentUser) {
+                window.showToast("Conectando con la base de datos... intenta de nuevo en un segundo.", "error");
+                initAuth(); // Re-intento de auth
+                return;
+            }
+
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            btn.disabled = true;
+
+            const name = document.getElementById('rsvp-name').value;
+            const phone = document.getElementById('rsvp-phone').value;
+            const passes = parseInt(document.getElementById('rsvp-passes').value);
+
+            try {
+                // Rule 1: Always use artifacts path for public data
+                const rsvpRef = collection(db, 'artifacts', appId, 'public', 'data', 'rsvps');
+                
+                await addDoc(rsvpRef, {
+                    name: name,
+                    phone: phone,
+                    passes: passes,
+                    timestamp: new Date().toISOString()
+                });
+
+                document.getElementById('rsvp-form').classList.add('hidden');
+                document.getElementById('rsvp-thanks').classList.remove('hidden');
+                window.showToast("¡Confirmación enviada con éxito!", "success");
+            } catch (error) {
+                console.error("Error saving RSVP:", error);
+                window.showToast("Hubo un error al guardar. Intenta de nuevo.", "error");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        };
+
+        // Cargar lista de confirmados (Real-time)
+        function loadRSVPs() {
+            if (!currentUser) return;
+            const rsvpRef = collection(db, 'artifacts', appId, 'public', 'data', 'rsvps');
+            
+            onSnapshot(rsvpRef, (snapshot) => {
+                const list = document.getElementById('admin-rsvp-list');
+                let html = '';
+                let totalPasses = 0;
+                
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    totalPasses += (data.passes || 0);
+                    html += `
+                        <div class="bg-white/70 p-4 rounded-xl border border-sage/20 shadow-sm flex justify-between items-center">
+                            <div>
+                                <p class="font-semibold text-charcoal text-sm">${data.name}</p>
+                                <p class="text-[10px] text-charcoal/60"><i class="fas fa-phone mr-1"></i>${data.phone}</p>
+                            </div>
+                            <div class="bg-sage/10 text-sage px-3 py-1 rounded-lg text-center">
+                                <span class="block text-lg font-bold leading-none">${data.passes}</span>
+                                <span class="text-[8px] uppercase tracking-widest">Pases</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                list.innerHTML = html || '<p class="text-xs text-center text-charcoal/50 mt-10">Aún no hay invitados confirmados.</p>';
+                document.getElementById('admin-total-passes').innerText = totalPasses;
+            }, (error) => {
+                console.error("Error loading RSVPs:", error);
+            });
+        }
+    </script>
+
+    <script>
+        // --- Configuration & Globals ---
+        const WEDDING_DATE = new Date("2026-12-05T13:00:00").getTime();
+        
+        // 6 imágenes de galería (Fullscreen)
+        const galleryImages = [
+            "https://lh3.googleusercontent.com/d/1bSuCj9m1R0zcRLZhU2bxvT6Z1iw2I4aD",
+            "https://lh3.googleusercontent.com/d/1xdAwSvsTTTi9i5rtBSBm2GG1YMo8f7oI",
+            "https://lh3.googleusercontent.com/d/1O43pAbKknxoZR4SJf7fJUzF8Iy8Dx3cJ",
+            "https://lh3.googleusercontent.com/d/1gslEPsrL70ivg5YJJmRwAkWyl46WskfR",
+            "https://lh3.googleusercontent.com/d/1rvN5INVa32-enVZXMnQhrdOqp5LjB9bQ",
+            "https://lh3.googleusercontent.com/d/1B1pwciO6KIr0vuyaFSOiHb3CIYW4SwiA"
+        ];
+        let currentPhotoIndex = 0;
+
+        // --- URL Parameter Parsing ---
+        const urlParams = new URLSearchParams(window.location.search);
+        // Eliminamos hasCeremony porque ahora es fija
+        const passLimit = parseInt(urlParams.get('p'));
+        const isAdmin = urlParams.get('admin') === '1';
+        const guestName = urlParams.get('n');
+
+        // --- Init Function ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initLeaves();
+            initCountdown();
+            applyUrlConfig();
+            initScrollReveal();
+        });
+
+        function applyUrlConfig() {
+            // Guest Name on Splash
+            if (guestName) {
+                document.getElementById('guest-greeting').classList.remove('hidden');
+                document.getElementById('guest-name').innerText = decodeURIComponent(guestName);
+                document.getElementById('rsvp-name').value = decodeURIComponent(guestName);
+            }
+
+            // Ya no ocultamos/mostramos ceremonia con URL, es fija.
+
+            // RSVP Passes Logic
+            const selectPasses = document.getElementById('rsvp-passes');
+            if (!isNaN(passLimit) && passLimit > 0) {
+                document.getElementById('passes-info').classList.remove('hidden');
+                document.getElementById('reserved-passes').innerText = passLimit;
+                
+                // Clear existing options
+                selectPasses.innerHTML = '<option value="">Selecciona cantidad</option>';
+                for (let i = 1; i <= passLimit; i++) {
+                    let opt = document.createElement('option');
+                    opt.value = i;
+                    opt.text = i === 1 ? '1 Pase' : `${i} Pases`;
+                    selectPasses.appendChild(opt);
+                }
+            }
+
+            // Admin Button
+            if (isAdmin) {
+                document.getElementById('btn-admin').classList.remove('hidden');
+            }
+        }
+
+        // --- Splash & Audio Logic ---
+        function openInvitation() {
+            const splash = document.getElementById('splash-screen');
+            const mainContent = document.getElementById('main-content');
+            const audioBtn = document.getElementById('audio-container');
+            const audio = document.getElementById('bg-audio');
+
+            splash.classList.add('fade-out');
+            setTimeout(() => {
+                splash.style.display = 'none';
+                mainContent.classList.remove('hidden');
+                audioBtn.classList.remove('hidden');
+                
+                // Play audio
+                audio.play().then(() => {
+                    document.querySelectorAll('.bar').forEach(b => b.classList.remove('paused'));
+                }).catch(e => console.log("Audio autoplay prevented"));
+            }, 1000);
+        }
+
+        function toggleAudio() {
+            const audio = document.getElementById('bg-audio');
+            const bars = document.querySelectorAll('.bar');
+            
+            if (audio.paused) {
+                audio.play();
+                bars.forEach(b => b.classList.remove('paused'));
+            } else {
+                audio.pause();
+                bars.forEach(b => b.classList.add('paused'));
+            }
+        }
+
+        // --- Leaves Animation (SVG via JS) ---
+        function initLeaves() {
+            const container = document.getElementById('leaves-container');
+            const numLeaves = 15; // Moderate amount for performance
+            
+            for (let i = 0; i < numLeaves; i++) {
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("viewBox", "0 0 24 24");
+                svg.classList.add('leaf');
+                
+                // Randomize properties
+                const size = Math.random() * 15 + 10; // 10px to 25px
+                const left = Math.random() * 100; // 0% to 100%
+                const durationFall = Math.random() * 10 + 10; // 10s to 20s
+                const durationSway = Math.random() * 3 + 2; // 2s to 5s
+                const delay = Math.random() * 15; // 0s to 15s delay
+
+                svg.style.width = `${size}px`;
+                svg.style.height = `${size}px`;
+                svg.style.left = `${left}%`;
+                svg.style.animationDuration = `${durationFall}s, ${durationSway}s`;
+                svg.style.animationDelay = `${delay}s, 0s`;
+
+                // Simple Leaf Path
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.setAttribute("d", "M17.4,6.2C16.8,5 15.6,4.3 14.3,4.2C13.2,4.1 11.9,4.4 10.7,5.1C8,6.8 6.7,9.7 6.4,12.2C6.3,13.6 6.6,15.1 7.4,16.2L5.3,18.3L6.7,19.7L8.8,17.6C9.9,18.4 11.4,18.7 12.8,18.6C15.3,18.3 18.2,17 19.9,14.3C20.6,13.1 20.9,11.8 20.8,10.7C20.7,9.4 20,8.2 18.8,7.6L17.4,6.2Z");
+                
+                svg.appendChild(path);
+                container.appendChild(svg);
+            }
+        }
+
+        // --- Scroll Reveal Animations ---
+        function initScrollReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Optional: remove observer after revealing to only trigger once
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px" // Triggers slightly before element enters fully
+            });
+
+            reveals.forEach(reveal => observer.observe(reveal));
+        }
+
+        // --- Countdown Logic ---
+        function initCountdown() {
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minsEl = document.getElementById('minutes');
+            const secsEl = document.getElementById('seconds');
+
+            const update = () => {
+                const now = new Date().getTime();
+                const distance = WEDDING_DATE - now;
+
+                if (distance < 0) {
+                    daysEl.innerText = "00";
+                    hoursEl.innerText = "00";
+                    minsEl.innerText = "00";
+                    secsEl.innerText = "00";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                daysEl.innerText = days.toString().padStart(2, '0');
+                hoursEl.innerText = hours.toString().padStart(2, '0');
+                minsEl.innerText = minutes.toString().padStart(2, '0');
+                secsEl.innerText = seconds.toString().padStart(2, '0');
+            };
+
+            update(); // Initial call
+            setInterval(update, 1000);
+        }
+
+        // --- Copy to Clipboard & Toast ---
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("¡Número de cuenta copiado!", "success");
+            }).catch(err => {
+                const el = document.createElement('textarea');
+                el.value = text;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                showToast("¡Número de cuenta copiado!", "success");
+            });
+        }
+
+        function showToast(message, type = "success") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const bgColor = type === 'success' ? 'bg-sage' : 'bg-red-500';
+            const icon = type === 'success' ? 'fa-check' : 'fa-exclamation-triangle';
+
+            toast.className = `toast flex items-center justify-center gap-3 ${bgColor} text-white font-montserrat text-sm py-3 px-6 rounded-full shadow-lg`;
+            toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Remove
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- Gallery Logic ---
+        function changePhoto(direction) {
+            currentPhotoIndex += direction;
+            if (currentPhotoIndex < 0) currentPhotoIndex = galleryImages.length - 1;
+            if (currentPhotoIndex >= galleryImages.length) currentPhotoIndex = 0;
+            
+            const imgEl = document.getElementById('gallery-img');
+            const bgBlur = document.getElementById('gallery-bg-blur');
+            imgEl.style.opacity = 0;
+            if(bgBlur) bgBlur.style.opacity = 0;
+            
+            setTimeout(() => {
+                imgEl.src = galleryImages[currentPhotoIndex];
+                if(bgBlur) {
+                    bgBlur.style.backgroundImage = `url('${galleryImages[currentPhotoIndex]}')`;
+                }
+                document.getElementById('gallery-counter').innerText = `${currentPhotoIndex + 1} / ${galleryImages.length}`;
+                
+                imgEl.style.opacity = 1;
+                if(bgBlur) bgBlur.style.opacity = 0.1; // Restore subtle opacity
+            }, 300);
+        }
+
+        // Para asegurar que showToast pueda ser llamado desde el módulo, lo agregamos a window
+        window.showToast = showToast;
+
+        // --- Admin Panel Logic ---
+        function toggleAdminModal() {
+            const modal = document.getElementById('admin-modal');
+            const content = document.getElementById('admin-modal-content');
+            
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    content.classList.remove('scale-95');
+                }, 10);
+            } else {
+                modal.classList.add('opacity-0');
+                content.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Cambiar entre pestañas en el Admin Panel
+        function switchAdminTab(tabName) {
+            document.getElementById('tab-btn-generator').classList.remove('active');
+            document.getElementById('tab-btn-rsvps').classList.remove('active');
+            
+            document.getElementById('tab-generator').classList.add('hidden');
+            document.getElementById('tab-rsvps').classList.add('hidden');
+
+            document.getElementById(`tab-btn-${tabName}`).classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+        }
+
+        function generateLink() {
+            const name = document.getElementById('gen-name').value.trim();
+            const passes = parseInt(document.getElementById('gen-passes').value);
+            
+            let baseUrl = window.location.origin + window.location.pathname;
+            let params = new URLSearchParams();
+
+            if (name) params.append('n', name);
+            if (passes > 0) params.append('p', passes);
+            // Parámetro 'c' eliminado del generador
+
+            const finalString = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
+            
+            document.getElementById('gen-result').innerText = finalString;
+            
+            copyToClipboard(finalString);
+        }
+    </script>
+</body>
+</html>
