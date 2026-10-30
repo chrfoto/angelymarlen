@@ -155,6 +155,18 @@
             transition: background-position 0.3s ease-out;
         }
 
+        /* Fullscreen photo blending */
+        .blend-image {
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
+
+        /* Hero photo bottom blending */
+        .blend-bottom {
+            -webkit-mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
+        }
+
         /* Tabs para Panel Admin */
         .tab-btn.active {
             border-bottom: 2px solid #8A8583;
@@ -188,9 +200,11 @@
         
         <!-- 2. Hero Section -->
         <section class="relative h-screen w-full flex flex-col justify-between items-center overflow-hidden">
-            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://lh3.googleusercontent.com/d/1DCGMOqPgwpMDgizlNVsNL-XJXPC78cXJ');"></div>
-            <!-- Gradient to blend foreground and background smoothly -->
-            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/40"></div>
+            <div class="absolute inset-0 blend-bottom">
+                <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://lh3.googleusercontent.com/d/1DCGMOqPgwpMDgizlNVsNL-XJXPC78cXJ');"></div>
+                <!-- Gradient to blend foreground and background smoothly -->
+                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/20"></div>
+            </div>
             
             <div class="relative z-10 pt-24 px-6 text-center text-off-white reveal">
                 <p class="font-montserrat text-sm uppercase tracking-[0.3em] mb-4 text-cream">Nuestra Boda</p>
@@ -200,16 +214,14 @@
             </div>
 
             <div class="relative z-10 pb-12 flex flex-col items-center reveal">
-                <p class="font-montserrat text-xs tracking-[0.2em] text-off-white uppercase mb-4 shadow-sm">Deslizar hacia abajo</p>
-                <i class="fas fa-chevron-down text-off-white text-2xl animate-bounce-down drop-shadow-md"></i>
+                <p class="font-montserrat text-xs tracking-[0.2em] text-charcoal uppercase mb-4">Deslizar hacia abajo</p>
+                <i class="fas fa-chevron-down text-charcoal text-2xl animate-bounce-down"></i>
             </div>
         </section>
 
         <!-- 3. Foto Intermedia 1 (Primer Plano) -->
-        <section class="py-12 px-6 flex justify-center reveal">
-            <div class="max-w-4xl w-full">
-                <img src="https://lh3.googleusercontent.com/d/1jgQlr8ut5MOrA03-xlYnxLQ99f8zM5tN" alt="Marlen y Angel" class="w-full h-auto rounded-3xl shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sage/20 object-contain">
-            </div>
+        <section class="w-full reveal mb-16 mt-8">
+            <img src="https://lh3.googleusercontent.com/d/1jgQlr8ut5MOrA03-xlYnxLQ99f8zM5tN" alt="Marlen y Angel" class="w-full h-auto min-h-[60vh] object-cover blend-image">
         </section>
 
         <!-- 4. Bloque de Inspiración -->
@@ -224,18 +236,16 @@
         </section>
 
         <!-- Foto Intermedia 2 (Primer Plano) -->
-        <section class="py-12 px-6 flex justify-center reveal">
-            <div class="max-w-4xl w-full">
-                <img src="https://lh3.googleusercontent.com/d/1CxK5hLq93bBk0aBudlqS1lCehgMuxsZy" alt="Nuestra Boda" class="w-full h-auto rounded-3xl shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sage/20 object-contain">
-            </div>
+        <section class="w-full reveal mb-16 mt-8">
+            <img src="https://lh3.googleusercontent.com/d/1CxK5hLq93bBk0aBudlqS1lCehgMuxsZy" alt="Nuestra Boda" class="w-full h-auto min-h-[60vh] object-cover blend-image">
         </section>
 
         <!-- 5. Cuenta Regresiva -->
         <section class="py-24 px-6 relative bg-cover bg-center bg-local md:bg-fixed" style="background-image: url('https://lh3.googleusercontent.com/d/1oKOxwDVxxuIEbW_DwOkCCvZpspN8WCSv');">
-            <div class="absolute inset-0 bg-cream/85 backdrop-blur-sm"></div>
+            <div class="absolute inset-0 bg-cream/20"></div>
             <div class="relative z-10 max-w-4xl mx-auto text-center reveal">
-                <h2 class="font-cinzel text-3xl md:text-4xl text-charcoal mb-2">05 de Diciembre 2026</h2>
-                <p class="font-montserrat text-sm tracking-widest text-sage mb-12 uppercase">Faltan</p>
+                <h2 class="font-cinzel text-3xl md:text-4xl text-charcoal mb-2 font-bold drop-shadow-md bg-white/30 inline-block px-6 py-2 rounded-full backdrop-blur-md border border-white/50">05 de Diciembre 2026</h2>
+                <p class="font-montserrat text-sm tracking-widest text-charcoal mb-12 uppercase font-bold drop-shadow-md mt-4">Faltan</p>
                 
                 <div class="flex justify-center gap-4 md:gap-8 font-montserrat">
                     <div class="glassmorphism w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl">
@@ -289,10 +299,8 @@
         </section>
 
         <!-- Foto Intermedia 3 (Primer Plano) -->
-        <section class="py-12 px-6 flex justify-center reveal">
-            <div class="max-w-4xl w-full">
-                <img src="https://lh3.googleusercontent.com/d/1wlxBezXUCinogXNS5wq7O3jPDoBZ7hBk" alt="Marlen y Angel" class="w-full h-auto rounded-3xl shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sage/20 object-contain">
-            </div>
+        <section class="w-full reveal mb-16 mt-8">
+            <img src="https://lh3.googleusercontent.com/d/1wlxBezXUCinogXNS5wq7O3jPDoBZ7hBk" alt="Marlen y Angel" class="w-full h-auto min-h-[60vh] object-cover blend-image">
         </section>
 
         <!-- 7. La Celebración -->
@@ -417,10 +425,8 @@
         </section>
         
         <!-- Foto Intermedia 4 (Primer Plano) -->
-        <section class="py-12 px-6 flex justify-center reveal">
-            <div class="max-w-4xl w-full">
-                <img src="https://lh3.googleusercontent.com/d/1B3Gy8M-31ZH1u1krhARHc95j66ftbjyR" alt="Marlen y Angel" class="w-full h-auto rounded-3xl shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sage/20 object-contain">
-            </div>
+        <section class="w-full reveal mb-16 mt-8">
+            <img src="https://lh3.googleusercontent.com/d/1B3Gy8M-31ZH1u1krhARHc95j66ftbjyR" alt="Marlen y Angel" class="w-full h-auto min-h-[60vh] object-cover blend-image">
         </section>
 
         <!-- 10. Mesa de Regalos -->
@@ -477,10 +483,8 @@
         </section>
 
         <!-- Foto Intermedia 5 (Primer Plano) -->
-        <section class="py-12 px-6 flex justify-center reveal">
-            <div class="max-w-4xl w-full">
-                <img src="https://lh3.googleusercontent.com/d/1wfdjqoiQ7qaBcqOC2qHWtrudlV_Cgc1P" alt="Marlen y Angel" class="w-full h-auto rounded-3xl shadow-[0_20px_50px_rgba(41,37,36,0.1)] border border-sage/20 object-contain">
-            </div>
+        <section class="w-full reveal mb-16 mt-8">
+            <img src="https://lh3.googleusercontent.com/d/1wfdjqoiQ7qaBcqOC2qHWtrudlV_Cgc1P" alt="Marlen y Angel" class="w-full h-auto min-h-[60vh] object-cover blend-image">
         </section>
 
         <!-- 12. Formulario RSVP -->
@@ -504,9 +508,18 @@
                     </div>
 
                     <div>
+                        <label class="block font-montserrat text-xs uppercase tracking-widest text-charcoal/70 mb-2">¿Asistirás?</label>
+                        <select id="rsvp-attending" onchange="toggleFormFields(this.value === 'yes')" required class="w-full bg-white/50 border border-sage/30 rounded-lg px-4 py-3 font-montserrat text-sm text-charcoal focus:outline-none focus:border-sage transition appearance-none">
+                            <option value="">Selecciona una opción</option>
+                            <option value="yes">Sí, ahí estaré</option>
+                            <option value="no">No podré asistir</option>
+                        </select>
+                    </div>
+
+                    <div id="extra-fields" class="hidden">
                         <label class="block font-montserrat text-xs uppercase tracking-widest text-charcoal/70 mb-2">Pases Confirmados</label>
                         <div id="passes-info" class="hidden mb-2 text-sm text-sage font-montserrat">Tienes <span id="reserved-passes"></span> pases reservados.</div>
-                        <select id="rsvp-passes" required class="w-full bg-white/50 border border-sage/30 rounded-lg px-4 py-3 font-montserrat text-sm text-charcoal focus:outline-none focus:border-sage transition appearance-none">
+                        <select id="rsvp-passes" class="w-full bg-white/50 border border-sage/30 rounded-lg px-4 py-3 font-montserrat text-sm text-charcoal focus:outline-none focus:border-sage transition appearance-none">
                             <option value="">Selecciona cantidad</option>
                             <option value="1">1 Pase</option>
                             <option value="2">2 Pases</option>
@@ -589,8 +602,11 @@
             <!-- Tab: Confirmados (Firebase) -->
             <div id="tab-rsvps" class="hidden flex flex-col h-64">
                 <div class="flex justify-between items-center mb-4 font-montserrat">
-                    <span class="text-xs uppercase tracking-widest text-charcoal/70">Total Pases:</span>
-                    <span class="text-lg font-semibold text-charcoal" id="admin-total-passes">0</span>
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-charcoal/70">Total Pases:</span>
+                        <span class="text-lg font-semibold text-charcoal ml-2" id="admin-total-passes">0</span>
+                    </div>
+                    <button onclick="downloadCSV()" class="bg-sage text-white px-3 py-1 rounded-md text-xs tracking-wider uppercase hover:bg-charcoal transition shadow-sm"><i class="fas fa-download mr-1"></i> Excel</button>
                 </div>
                 <div id="admin-rsvp-list" class="flex-1 overflow-y-auto space-y-2 pr-2 font-montserrat">
                     <p class="text-xs text-center text-charcoal/50 mt-10"><i class="fas fa-spinner fa-spin text-2xl mb-2"></i><br>Cargando datos...</p>
@@ -605,11 +621,20 @@
     <!-- Firebase SDK (Module) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { /* Fallback configs if not in immersive */ };
+        
+        // Tu configuración de Firebase para "marlen-y-angel"
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzoIPrBqH_SCz8q_lq_ISGr_DdFV32YtY",
+            authDomain: "marlen-y-angel-328d9.firebaseapp.com",
+            projectId: "marlen-y-angel-328d9",
+            storageBucket: "marlen-y-angel-328d9.firebasestorage.app",
+            messagingSenderId: "429319888891",
+            appId: "1:429319888891:web:562b027673f681919bf55e"
+        };
         
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -620,11 +645,8 @@
         // Initialize Authentication
         async function initAuth() {
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+                // Siempre forzar inicio de sesión anónimo usando tu propio proyecto
+                await signInAnonymously(auth);
                 currentUser = auth.currentUser;
                 
                 // Si es admin, cargamos la lista de inmediato
@@ -655,7 +677,8 @@
 
             const name = document.getElementById('rsvp-name').value;
             const phone = document.getElementById('rsvp-phone').value;
-            const passes = parseInt(document.getElementById('rsvp-passes').value);
+            const isAttending = document.getElementById('rsvp-attending').value === 'yes';
+            const passes = isAttending ? parseInt(document.getElementById('rsvp-passes').value) : 0;
 
             try {
                 // Rule 1: Always use artifacts path for public data
@@ -664,9 +687,12 @@
                 await addDoc(rsvpRef, {
                     name: name,
                     phone: phone,
+                    attending: isAttending,
                     passes: passes,
                     timestamp: new Date().toISOString()
                 });
+                
+                localStorage.setItem('rsvp_submitted', 'true');
 
                 document.getElementById('rsvp-form').classList.add('hidden');
                 document.getElementById('rsvp-thanks').classList.remove('hidden');
@@ -688,20 +714,28 @@
                 const list = document.getElementById('admin-rsvp-list');
                 let html = '';
                 let totalPasses = 0;
+                window.guestListData = []; // Guardar array global para descargar CSV
                 
                 snapshot.forEach(doc => {
                     const data = doc.data();
-                    totalPasses += (data.passes || 0);
+                    window.guestListData.push(data);
+                    
+                    if (data.attending !== false) {
+                        totalPasses += (data.passes || 0);
+                    }
+                    
+                    const attendanceBadge = data.attending === false 
+                        ? `<span class="text-red-500 text-[10px] uppercase font-bold tracking-widest">No asiste</span>`
+                        : `<div class="bg-sage/10 text-sage px-3 py-1 rounded-lg text-center"><span class="block text-lg font-bold leading-none">${data.passes}</span><span class="text-[8px] uppercase tracking-widest">Pases</span></div>`;
+
                     html += `
                         <div class="bg-white/70 p-4 rounded-xl border border-sage/20 shadow-sm flex justify-between items-center">
                             <div>
                                 <p class="font-semibold text-charcoal text-sm">${data.name}</p>
                                 <p class="text-[10px] text-charcoal/60"><i class="fas fa-phone mr-1"></i>${data.phone}</p>
+                                ${data.attending === false ? attendanceBadge : ''}
                             </div>
-                            <div class="bg-sage/10 text-sage px-3 py-1 rounded-lg text-center">
-                                <span class="block text-lg font-bold leading-none">${data.passes}</span>
-                                <span class="text-[8px] uppercase tracking-widest">Pases</span>
-                            </div>
+                            ${data.attending !== false ? attendanceBadge : ''}
                         </div>
                     `;
                 });
@@ -742,7 +776,69 @@
             initCountdown();
             applyUrlConfig();
             initScrollReveal();
+            checkPreviousRSVP();
         });
+
+        // Verificar si ya se envió el formulario antes
+        function checkPreviousRSVP() {
+            if (localStorage.getItem('rsvp_submitted') === 'true') {
+                const form = document.getElementById('rsvp-form');
+                const thanks = document.getElementById('rsvp-thanks');
+                if(form && thanks) {
+                    form.classList.add('hidden');
+                    thanks.classList.remove('hidden');
+                    thanks.querySelector('h3').innerText = "¡Ya respondiste!";
+                    thanks.querySelector('p').innerText = "Hemos registrado tu respuesta en nuestro sistema. ¡Gracias!";
+                }
+            }
+        }
+
+        // Mostrar/Ocultar campos extra si asiste o no
+        function toggleFormFields(isAttending) {
+            const extraFields = document.getElementById('extra-fields');
+            const selectPasses = document.getElementById('rsvp-passes');
+            const submitBtn = document.querySelector('#rsvp-form button[type="submit"]');
+            
+            if (isAttending) {
+                extraFields.classList.remove('hidden');
+                selectPasses.required = true;
+                submitBtn.innerText = "Confirmar Asistencia";
+            } else {
+                extraFields.classList.add('hidden');
+                selectPasses.required = false;
+                submitBtn.innerText = "Enviar Respuesta";
+            }
+        }
+
+        // Función para descargar en Excel/CSV
+        function downloadCSV() {
+            if (!window.guestListData || window.guestListData.length === 0) {
+                showToast("No hay datos para exportar", "error");
+                return;
+            }
+            
+            // Cabeceras
+            let csvContent = "data:text/csv;charset=utf-8,Nombre,Telefono,Asiste,Pases,FechaRegistro\n";
+            
+            window.guestListData.forEach(guest => {
+                // Limpiar textos de comas y saltos de línea para el CSV
+                const cleanName = `"${(guest.name || '').replace(/"/g, '""')}"`;
+                const asisteStr = guest.attending === false ? "No" : "Sí";
+                const pases = guest.attending === false ? 0 : (guest.passes || 0);
+                const fecha = guest.timestamp ? new Date(guest.timestamp).toLocaleDateString('es-MX') : '';
+                
+                let row = `${cleanName},${guest.phone},${asisteStr},${pases},${fecha}`;
+                csvContent += row + "\n";
+            });
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "lista_invitados_boda.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
         function applyUrlConfig() {
             // Guest Name on Splash
