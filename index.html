@@ -585,18 +585,24 @@
             <!-- Tab: Generador -->
             <div id="tab-generator" class="space-y-4 font-montserrat text-sm">
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-charcoal/70 mb-1">Nombre (Opcional)</label>
+                    <label class="block text-xs uppercase tracking-wider text-charcoal/70 mb-1">Nombre del Invitado (Opcional)</label>
                     <input type="text" id="gen-name" class="w-full bg-white border border-sage/30 rounded-lg px-3 py-2 outline-none focus:border-sage" placeholder="Ej. Familia Pérez">
                 </div>
                 <div>
                     <label class="block text-xs uppercase tracking-wider text-charcoal/70 mb-1">Límite de Pases (0-10)</label>
                     <input type="number" id="gen-passes" min="0" max="10" value="0" class="w-full bg-white border border-sage/30 rounded-lg px-3 py-2 outline-none focus:border-sage">
-                    <p class="text-[10px] text-charcoal/50 mt-1">0 = Sin límite (muestra 1-5)</p>
+                    <p class="text-[10px] text-charcoal/50 mt-1">0 = Sin límite (el invitado podrá elegir 1 a 5)</p>
                 </div>
-                <button onclick="generateLink()" class="w-full bg-sage text-white py-3 rounded-lg uppercase tracking-wider text-xs hover:bg-charcoal transition shadow mt-4">
-                    Generar y Copiar Enlace
+                <button onclick="generateLink()" class="w-full bg-sage text-white py-3 rounded-lg uppercase tracking-wider text-xs hover:bg-charcoal transition shadow mt-4 flex items-center justify-center gap-2">
+                    <i class="fas fa-magic"></i> Generar Enlace
                 </button>
-                <div class="mt-4 break-all text-xs text-center text-sage font-medium h-10" id="gen-result"></div>
+                
+                <div class="mt-4 flex gap-2">
+                    <input type="text" id="gen-result" readonly class="w-full bg-sand/30 border border-sage/30 rounded-lg px-3 py-2 text-xs text-charcoal outline-none hidden" placeholder="El enlace aparecerá aquí...">
+                    <button id="gen-copy-btn" onclick="copyGeneratedLink()" class="bg-charcoal text-white px-4 py-2 rounded-lg hover:bg-sage transition hidden shadow" title="Copiar enlace">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
             </div>
 
             <!-- Tab: Confirmados (Firebase) -->
@@ -1099,9 +1105,21 @@
 
             const finalString = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
             
-            document.getElementById('gen-result').innerText = finalString;
+            const resultInput = document.getElementById('gen-result');
+            const copyBtn = document.getElementById('gen-copy-btn');
+            
+            resultInput.value = finalString;
+            resultInput.classList.remove('hidden');
+            copyBtn.classList.remove('hidden');
             
             copyToClipboard(finalString);
+        }
+
+        function copyGeneratedLink() {
+            const link = document.getElementById('gen-result').value;
+            if(link) {
+                copyToClipboard(link);
+            }
         }
     </script>
 </body>
