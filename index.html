@@ -173,6 +173,24 @@
             color: #292524;
             font-weight: 600;
         }
+
+        /* Envelope Animations */
+        #envelope-wrapper {
+            perspective: 1000px;
+        }
+        #envelope-flap {
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out;
+            z-index: 30;
+        }
+        #envelope-seal {
+            transition: opacity 0.3s ease-in-out;
+            z-index: 40;
+        }
+        #envelope-letter {
+            transition: transform 0.8s ease-in-out;
+            z-index: 10;
+        }
     </style>
 </head>
 <body class="text-charcoal font-cormorant antialiased overflow-x-hidden relative">
@@ -181,17 +199,43 @@
     <div id="leaves-container"></div>
 
     <!-- 1. Splash Screen -->
-    <div id="splash-screen" class="fixed inset-0 z-50 bg-off-white flex flex-col items-center justify-center">
-        <div class="text-center p-8 max-w-lg mx-auto">
-            <!-- Minimal Floral SVG -->
-            <svg class="w-24 h-24 mx-auto mb-6 text-sage" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12,2C12,2 14.5,4.5 14.5,8C14.5,10.8 12.6,13 12,13.5C11.4,13 9.5,10.8 9.5,8C9.5,4.5 12,2 12,2 M12,13.5C12,13.5 15.5,15.5 18,15.5C20.8,15.5 22,12.5 22,12.5C22,12.5 19.5,10 16,10C13.2,10 12,13.5 12,13.5 M12,13.5C12,13.5 8.5,15.5 6,15.5C3.2,15.5 2,12.5 2,12.5C2,12.5 4.5,10 8,10C10.8,10 12,13.5 12,13.5 M12,13.5L12,22" stroke="currentColor" stroke-width="0.5" fill="none"/>
-            </svg>
-            <h1 class="font-cinzel text-4xl md:text-5xl text-charcoal mb-4">Marlen & Angel</h1>
-            <p id="guest-greeting" class="font-montserrat text-sm tracking-[0.2em] text-sage uppercase mb-8 hidden">Para: <span id="guest-name"></span></p>
-            <button onclick="openInvitation()" class="glassmorphism font-montserrat text-sm uppercase tracking-widest px-8 py-3 rounded-full hover:bg-white/60 transition duration-300 text-charcoal shadow-sm">
-                Abrir Invitación
-            </button>
+    <div id="splash-screen" class="fixed inset-0 z-50 bg-off-white flex flex-col items-center justify-center overflow-hidden">
+        <div id="envelope-wrapper" class="relative w-[300px] h-[200px] md:w-[400px] md:h-[260px] cursor-pointer hover:scale-105 transition-transform duration-300" onclick="openInvitation()">
+            <!-- Envelope Back -->
+            <div class="absolute inset-0 bg-sand rounded-lg shadow-xl overflow-hidden flex items-end justify-center">
+                <!-- Golden details on the back -->
+                <div class="w-full h-1/2 bg-gradient-to-t from-dusty-rose/50 to-transparent"></div>
+            </div>
+            
+            <!-- Letter (Invitation Card preview) -->
+            <div id="envelope-letter" class="absolute inset-x-2 top-2 bottom-0 bg-white rounded-t-md shadow-inner flex flex-col items-center justify-start pt-6 border border-dusty-rose/30">
+                <h1 class="font-cinzel text-xl md:text-2xl text-charcoal mb-2">Marlen & Angel</h1>
+                <p id="guest-greeting" class="font-montserrat text-[10px] tracking-[0.2em] text-sage uppercase hidden">Para: <span id="guest-name"></span></p>
+                <div class="mt-4 w-12 h-12 rounded-full border border-dusty-rose flex items-center justify-center text-dusty-rose">
+                    <i class="fas fa-heart text-sm"></i>
+                </div>
+            </div>
+
+            <!-- Envelope Front Left Flap -->
+            <div class="absolute inset-0 z-20 pointer-events-none" style="clip-path: polygon(0 0, 0 100%, 50% 100%, 50% 50%); background-color: #f1ede8;"></div>
+            <!-- Envelope Front Right Flap -->
+            <div class="absolute inset-0 z-20 pointer-events-none" style="clip-path: polygon(100% 0, 100% 100%, 50% 100%, 50% 50%); background-color: #ebe5dd;"></div>
+            <!-- Envelope Front Bottom Flap -->
+            <div class="absolute inset-0 z-20 pointer-events-none" style="clip-path: polygon(0 100%, 100% 100%, 50% 50%); background-color: #e5dfd6;"></div>
+            
+            <!-- Envelope Flap (Top) -->
+            <div id="envelope-flap" class="absolute inset-0 bg-[#f1ede8] rounded-t-lg pointer-events-none drop-shadow-md" style="clip-path: polygon(0 0, 100% 0, 50% 60%);">
+                <!-- Golden border on flap -->
+                <div class="absolute inset-0 z-10" style="background: linear-gradient(to bottom, #d4af37 0%, transparent 2%); clip-path: polygon(0 0, 100% 0, 50% 60%);"></div>
+            </div>
+
+            <!-- Seal -->
+            <div id="envelope-seal" class="absolute top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-[#d4af37] to-[#aa8022] shadow-md flex items-center justify-center z-40 border-2 border-[#fff3cc]">
+                <i class="fas fa-gem text-white/80 text-xs"></i>
+            </div>
+            
+            <!-- Click to open text -->
+            <p class="absolute -bottom-10 left-0 right-0 text-center font-montserrat text-xs tracking-widest text-charcoal uppercase animate-pulse">Toca para abrir</p>
         </div>
     </div>
 
@@ -255,19 +299,14 @@
 
             <div class="max-w-lg mx-auto glassmorphism p-8 rounded-3xl reveal">
                 <h3 class="font-montserrat text-xs uppercase tracking-[0.2em] text-charcoal/50 mb-6">Padrinos de Velación</h3>
-                <p class="font-cormorant text-2xl text-charcoal mb-2">Emilia Orozco Rodriguez</p>
+                <p class="font-cormorant text-2xl text-charcoal mb-2">Emilio Orozco Rodriguez</p>
                 <div class="w-8 h-px bg-sage mx-auto my-3"></div>
                 <p class="font-cormorant text-2xl text-charcoal">Josefina Corona Chavez</p>
             </div>
         </section>
 
-        <!-- Foto Intermedia 1 (Primer Plano) -->
-        <section class="w-full reveal mb-16 mt-8">
-            <img src="https://lh3.googleusercontent.com/d/1jgQlr8ut5MOrA03-xlYnxLQ99f8zM5tN" alt="Marlen y Angel" class="w-full h-auto min-h-[60vh] object-cover blend-image">
-        </section>
-
         <!-- 5. Cuenta Regresiva -->
-        <section class="py-24 px-6 relative bg-cover bg-center bg-local md:bg-fixed" style="background-image: url('https://lh3.googleusercontent.com/d/1oKOxwDVxxuIEbW_DwOkCCvZpspN8WCSv');">
+        <section class="py-24 px-6 relative bg-cover bg-center bg-local md:bg-fixed" style="background-image: url('https://lh3.googleusercontent.com/d/1B1pwciO6KIr0vuyaFSOiHb3CIYW4SwiA');">
             <div class="absolute inset-0 bg-cream/20"></div>
             <div class="relative z-10 max-w-4xl mx-auto text-center reveal">
                 <h2 class="font-cinzel text-3xl md:text-4xl text-charcoal mb-2 font-bold drop-shadow-md bg-white/30 inline-block px-6 py-2 rounded-full backdrop-blur-md border border-white/50">05 de Diciembre 2026</h2>
@@ -292,11 +331,6 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Foto Intermedia 2 (Primer Plano) -->
-        <section class="w-full reveal mb-16 mt-8">
-            <img src="https://lh3.googleusercontent.com/d/1CxK5hLq93bBk0aBudlqS1lCehgMuxsZy" alt="Nuestra Boda" class="w-full h-auto min-h-[60vh] object-cover blend-image">
         </section>
 
         <!-- 6. La Celebración -->
@@ -399,13 +433,20 @@
                             <p class="font-montserrat text-sm font-semibold text-charcoal">9:00 PM</p>
                         </div>
                     </div>
+
+                    <div class="flex items-center justify-between w-full relative reveal" style="transition-delay: 900ms;">
+                        <div class="w-5/12 text-right pr-4">
+                            <p class="font-montserrat text-sm font-semibold text-charcoal">11:00 PM</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-cream border-2 border-sage flex items-center justify-center z-10 relative text-sage shadow-md">
+                            <i class="fas fa-moon text-lg"></i>
+                        </div>
+                        <div class="w-5/12 pl-4 text-left">
+                            <p class="font-cormorant text-2xl text-charcoal">Fin del Evento</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Foto Intermedia 3 (Primer Plano) -->
-        <section class="w-full reveal mb-16 mt-8">
-            <img src="https://lh3.googleusercontent.com/d/1wlxBezXUCinogXNS5wq7O3jPDoBZ7hBk" alt="Marlen y Angel" class="w-full h-auto min-h-[60vh] object-cover blend-image">
         </section>
 
         <!-- 8. Código de Vestimenta -->
@@ -444,11 +485,6 @@
             </div>
         </section>
         
-        <!-- Foto Intermedia 4 (Primer Plano) -->
-        <section class="w-full reveal mb-16 mt-8">
-            <img src="https://lh3.googleusercontent.com/d/1B3Gy8M-31ZH1u1krhARHc95j66ftbjyR" alt="Marlen y Angel" class="w-full h-auto min-h-[60vh] object-cover blend-image">
-        </section>
-
         <!-- 10. Galería de Fotos (Rediseño Estilo Álbum Editorial) -->
         <section class="py-32 px-6 bg-cream relative overflow-hidden">
             <h2 class="font-cinzel text-4xl text-center text-charcoal mb-16 reveal relative z-10">Nuestros Momentos</h2>
@@ -460,9 +496,9 @@
                     <!-- Contenedor de la foto -->
                     <div class="relative h-[55vh] md:h-[70vh] w-full flex items-center justify-center bg-sand/30 overflow-hidden border border-sage/20">
                         <!-- Fondo desenfocado dinámico para que no se vea vacío a los lados -->
-                        <div class="absolute inset-0 opacity-40 bg-cover bg-center blur-2xl transform scale-110" id="gallery-bg-blur" style="background-image: url('https://lh3.googleusercontent.com/d/1bSuCj9m1R0zcRLZhU2bxvT6Z1iw2I4aD')"></div>
+                        <div class="absolute inset-0 opacity-40 bg-cover bg-center blur-2xl transform scale-110" id="gallery-bg-blur" style="background-image: url('https://lh3.googleusercontent.com/d/1oKOxwDVxxuIEbW_DwOkCCvZpspN8WCSv')"></div>
                         
-                        <img id="gallery-img" src="https://lh3.googleusercontent.com/d/1bSuCj9m1R0zcRLZhU2bxvT6Z1iw2I4aD" class="relative z-10 max-w-full max-h-full object-contain drop-shadow-xl transition-opacity duration-500" alt="Momentos">
+                        <img id="gallery-img" src="https://lh3.googleusercontent.com/d/1oKOxwDVxxuIEbW_DwOkCCvZpspN8WCSv" class="relative z-10 max-w-full max-h-full object-contain drop-shadow-xl transition-opacity duration-500" alt="Momentos">
                     </div>
                     
                     <!-- Controles elegantes -->
@@ -472,7 +508,7 @@
                         </button>
                         
                         <div id="gallery-counter" class="font-cormorant italic text-xl md:text-2xl text-charcoal">
-                            1 / 7
+                            1 / 11
                         </div>
                         
                         <button onclick="changePhoto(1)" class="text-sage hover:text-charcoal transition font-montserrat text-xs md:text-sm tracking-[0.2em] uppercase flex items-center gap-2 group">
@@ -481,11 +517,6 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Foto Intermedia 5 (Primer Plano) -->
-        <section class="w-full reveal mb-16 mt-8">
-            <img src="https://lh3.googleusercontent.com/d/1DCGMOqPgwpMDgizlNVsNL-XJXPC78cXJ" alt="Marlen y Angel" class="w-full h-auto min-h-[60vh] object-cover blend-image">
         </section>
 
         <!-- 11. Formulario RSVP -->
@@ -759,15 +790,19 @@
         // --- Configuration & Globals ---
         const WEDDING_DATE = new Date("2026-12-05T13:00:00").getTime();
         
-        // 7 imágenes de galería (Fullscreen)
+        // 11 imágenes de galería (Fullscreen y cuerpo integrados)
         const galleryImages = [
+            "https://lh3.googleusercontent.com/d/1oKOxwDVxxuIEbW_DwOkCCvZpspN8WCSv",
             "https://lh3.googleusercontent.com/d/1bSuCj9m1R0zcRLZhU2bxvT6Z1iw2I4aD",
             "https://lh3.googleusercontent.com/d/1xdAwSvsTTTi9i5rtBSBm2GG1YMo8f7oI",
             "https://lh3.googleusercontent.com/d/1O43pAbKknxoZR4SJf7fJUzF8Iy8Dx3cJ",
             "https://lh3.googleusercontent.com/d/1gslEPsrL70ivg5YJJmRwAkWyl46WskfR",
-            "https://lh3.googleusercontent.com/d/1rvN5INVa32-enVZXMnQhrdOqp5LjB9bQ",
-            "https://lh3.googleusercontent.com/d/1B1pwciO6KIr0vuyaFSOiHb3CIYW4SwiA",
-            "https://lh3.googleusercontent.com/d/1wfdjqoiQ7qaBcqOC2qHWtrudlV_Cgc1P"
+            "https://lh3.googleusercontent.com/d/1wfdjqoiQ7qaBcqOC2qHWtrudlV_Cgc1P",
+            "https://lh3.googleusercontent.com/d/1jgQlr8ut5MOrA03-xlYnxLQ99f8zM5tN",
+            "https://lh3.googleusercontent.com/d/1CxK5hLq93bBk0aBudlqS1lCehgMuxsZy",
+            "https://lh3.googleusercontent.com/d/1wlxBezXUCinogXNS5wq7O3jPDoBZ7hBk",
+            "https://lh3.googleusercontent.com/d/1B3Gy8M-31ZH1u1krhARHc95j66ftbjyR",
+            "https://lh3.googleusercontent.com/d/1DCGMOqPgwpMDgizlNVsNL-XJXPC78cXJ"
         ];
         let currentPhotoIndex = 0;
 
@@ -882,22 +917,41 @@
 
         // --- Splash & Audio Logic ---
         function openInvitation() {
+            const wrapper = document.getElementById('envelope-wrapper');
+            const flap = document.getElementById('envelope-flap');
+            const seal = document.getElementById('envelope-seal');
+            const letter = document.getElementById('envelope-letter');
             const splash = document.getElementById('splash-screen');
             const mainContent = document.getElementById('main-content');
             const audioBtn = document.getElementById('audio-container');
             const audio = document.getElementById('bg-audio');
 
-            splash.classList.add('fade-out');
+            // 1. Romper el sello y abrir solapa
+            seal.style.opacity = '0';
+            flap.style.transform = 'rotateX(180deg)';
+            wrapper.classList.remove('hover:scale-105');
+
+            // 2. Sacar la invitación del sobre
             setTimeout(() => {
-                splash.style.display = 'none';
-                mainContent.classList.remove('hidden');
-                audioBtn.classList.remove('hidden');
+                letter.style.transform = 'translateY(-120px)';
+                letter.style.zIndex = '35'; // Aumentamos de 25 a 35 para que pase por encima de la solapa
+            }, 500);
+
+            // 3. Desvanecer la pantalla de bienvenida
+            setTimeout(() => {
+                splash.classList.add('fade-out');
                 
-                // Play audio
-                audio.play().then(() => {
-                    document.querySelectorAll('.bar').forEach(b => b.classList.remove('paused'));
-                }).catch(e => console.log("Audio autoplay prevented"));
-            }, 1000);
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    mainContent.classList.remove('hidden');
+                    audioBtn.classList.remove('hidden');
+                    
+                    // Reproducir audio
+                    audio.play().then(() => {
+                        document.querySelectorAll('.bar').forEach(b => b.classList.remove('paused'));
+                    }).catch(e => console.log("Audio autoplay prevented"));
+                }, 1000);
+            }, 1800);
         }
 
         function toggleAudio() {
