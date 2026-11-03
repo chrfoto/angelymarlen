@@ -231,47 +231,29 @@
     <div id="petals-container"></div>
 
     <!-- 1. Splash Screen -->
-    <div id="splash-screen" class="fixed inset-0 z-[60] bg-transparent flex flex-col items-center justify-center overflow-hidden">
-        <div id="envelope-wrapper" class="relative w-[300px] h-[200px] md:w-[400px] md:h-[260px] cursor-pointer hover:scale-105 transition-transform duration-300" onclick="openInvitation()">
+    <div id="splash-screen" class="fixed inset-0 z-[60] bg-transparent flex flex-col items-center justify-center overflow-hidden p-6">
+        <div id="envelope-wrapper" class="relative w-full max-w-[340px] bg-white rounded-[2rem] shadow-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:scale-105 transition-transform duration-300 overflow-hidden metallic-edge glassmorphism" onclick="openInvitation()">
             
-            <!-- Dynamic Shine Overlay for Envelope -->
-            <div class="absolute inset-0 pointer-events-none z-50 rounded-lg metallic-shine-overlay"></div>
+            <!-- Fondo sutil de tapiz para la tarjeta -->
+            <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: url('https://i.imgur.com/E7fjftv.png'); background-size: cover; background-position: center;"></div>
+            
+            <!-- Dynamic Shine Overlay -->
+            <div class="absolute inset-0 pointer-events-none z-50 rounded-[2rem] metallic-shine-overlay"></div>
+            
+            <div class="relative z-10 w-full flex flex-col items-center">
+                <p class="font-montserrat text-[10px] tracking-[0.3em] text-[#D4AF37] uppercase mb-4 font-semibold">Nuestra Boda</p>
+                <h1 class="font-cinzel text-3xl md:text-4xl text-charcoal mb-4 font-semibold">Marlen & Angel</h1>
+                
+                <p id="guest-greeting" class="font-montserrat text-[10px] tracking-[0.2em] text-[#D4AF37] uppercase hidden mb-2 font-bold">Para: <span id="guest-name"></span></p>
 
-            <!-- Envelope Back -->
-            <div class="absolute inset-0 bg-sand rounded-lg shadow-xl overflow-hidden flex items-end justify-center metallic-edge">
-                <!-- Golden details on the back -->
-                <div class="w-full h-1/2 bg-gradient-to-t from-[#D4AF37]/30 to-transparent"></div>
-            </div>
-            
-            <!-- Letter (Invitation Card preview) -->
-            <div id="envelope-letter" class="absolute inset-x-2 top-2 bottom-0 bg-white rounded-t-md shadow-inner flex flex-col items-center justify-start pt-6 border border-[#D4AF37]/40 metallic-edge">
-                <h1 class="font-cinzel text-xl md:text-2xl text-charcoal mb-2">Marlen & Angel</h1>
-                <p id="guest-greeting" class="font-montserrat text-[10px] tracking-[0.2em] text-[#D4AF37] uppercase hidden">Para: <span id="guest-name"></span></p>
-                <div class="mt-4 w-12 h-12 rounded-full border border-[#D4AF37] flex items-center justify-center text-[#D4AF37]">
-                    <i class="fas fa-heart text-sm"></i>
-                </div>
-            </div>
+                <p class="font-cormorant italic text-lg text-charcoal/80 mb-8 max-w-[250px] leading-relaxed">
+                    "El amor es paciente, es bondadoso..."
+                </p>
 
-            <!-- Envelope Front Left Flap -->
-            <div class="absolute inset-0 z-20 pointer-events-none" style="clip-path: polygon(0 0, 0 100%, 50% 100%, 50% 50%); background-color: #f1ede8;"></div>
-            <!-- Envelope Front Right Flap -->
-            <div class="absolute inset-0 z-20 pointer-events-none" style="clip-path: polygon(100% 0, 100% 100%, 50% 100%, 50% 50%); background-color: #ebe5dd;"></div>
-            <!-- Envelope Front Bottom Flap -->
-            <div class="absolute inset-0 z-20 pointer-events-none" style="clip-path: polygon(0 100%, 100% 100%, 50% 50%); background-color: #e5dfd6;"></div>
-            
-            <!-- Envelope Flap (Top) -->
-            <div id="envelope-flap" class="absolute inset-0 bg-[#f1ede8] rounded-t-lg pointer-events-none drop-shadow-md" style="clip-path: polygon(0 0, 100% 0, 50% 60%);">
-                <!-- Golden border on flap -->
-                <div class="absolute inset-0 z-10" style="background: linear-gradient(to bottom, #d4af37 0%, transparent 2%); clip-path: polygon(0 0, 100% 0, 50% 60%);"></div>
+                <button class="w-full py-4 bg-[#D4AF37] text-white rounded-full font-montserrat text-xs uppercase tracking-widest hover:bg-[#aa8022] transition duration-300 shadow-md flex items-center justify-center gap-3">
+                    <i class="fas fa-envelope-open-text"></i> Abrir Invitación
+                </button>
             </div>
-
-            <!-- Seal -->
-            <div id="envelope-seal" class="absolute top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-[#d4af37] to-[#aa8022] shadow-md flex items-center justify-center z-40 border-2 border-[#fff3cc]">
-                <i class="fas fa-gem text-white/80 text-xs"></i>
-            </div>
-            
-            <!-- Click to open text -->
-            <p class="absolute -bottom-10 left-0 right-0 text-center font-montserrat text-xs tracking-widest text-charcoal uppercase animate-pulse">Toca para abrir</p>
         </div>
     </div>
 
@@ -295,8 +277,10 @@
             </div>
 
             <div class="relative z-10 pb-12 flex flex-col items-center reveal">
-                <p class="font-montserrat text-xs tracking-[0.2em] text-[#D4AF37] uppercase mb-4">Deslizar hacia abajo</p>
-                <i class="fas fa-chevron-down text-[#D4AF37] text-2xl animate-bounce-down"></i>
+                <div class="bg-black/30 backdrop-blur-sm px-8 py-3 rounded-full flex flex-col items-center border border-white/20 shadow-lg cursor-pointer">
+                    <p class="font-montserrat text-[10px] tracking-[0.2em] text-white uppercase mb-2">Deslizar hacia abajo</p>
+                    <i class="fas fa-chevron-down text-[#D4AF37] text-xl animate-bounce-down"></i>
+                </div>
             </div>
         </section>
 
@@ -321,49 +305,52 @@
             <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
                 <div class="glassmorphism metallic-edge p-8 rounded-3xl reveal" style="transition-delay: 100ms;">
                     <h3 class="font-montserrat text-xs uppercase tracking-[0.2em] text-[#D4AF37] mb-6">Padres de la Novia</h3>
-                    <p class="font-cormorant text-2xl text-[#D4AF37] font-semibold mb-2">Guadalupe Hernandez Zavala</p>
+                    <p class="font-cormorant text-2xl text-charcoal font-semibold mb-2">Guadalupe Hernández Zavala</p>
                     <div class="w-8 h-px bg-[#D4AF37] mx-auto my-3"></div>
-                    <p class="font-cormorant text-2xl text-[#D4AF37] font-semibold">Daniel Ortiz Cisneros</p>
+                    <p class="font-cormorant text-2xl text-charcoal font-semibold">Daniel Ortíz Cisneros</p>
                 </div>
                 <div class="glassmorphism metallic-edge p-8 rounded-3xl reveal" style="transition-delay: 200ms;">
                     <h3 class="font-montserrat text-xs uppercase tracking-[0.2em] text-[#D4AF37] mb-6">Padres del Novio</h3>
-                    <p class="font-cormorant text-2xl text-[#D4AF37] font-semibold mb-2">Graciela Orozco Rodriguez</p>
+                    <p class="font-cormorant text-2xl text-charcoal font-semibold mb-2">Graciela Orozco Rodríguez</p>
                     <div class="w-8 h-px bg-[#D4AF37] mx-auto my-3"></div>
-                    <p class="font-cormorant text-2xl text-[#D4AF37] font-semibold">Jacinto González García</p>
+                    <p class="font-cormorant text-2xl text-charcoal font-semibold">Jacinto González García</p>
                 </div>
             </div>
 
             <div class="max-w-lg mx-auto glassmorphism metallic-edge p-8 rounded-3xl reveal">
                 <h3 class="font-montserrat text-xs uppercase tracking-[0.2em] text-[#D4AF37] mb-6">Padrinos de Velación</h3>
-                <p class="font-cormorant text-2xl text-[#D4AF37] font-semibold mb-2">Emilio Orozco Rodriguez</p>
+                <p class="font-cormorant text-2xl text-charcoal font-semibold mb-2">Emilio Orozco Rodríguez</p>
                 <div class="w-8 h-px bg-[#D4AF37] mx-auto my-3"></div>
-                <p class="font-cormorant text-2xl text-[#D4AF37] font-semibold">Josefina Corona Chavez</p>
+                <p class="font-cormorant text-2xl text-charcoal font-semibold">Josefina Corona Chávez</p>
             </div>
         </section>
 
         <!-- 5. Cuenta Regresiva -->
         <section class="py-24 px-6 relative bg-cover bg-center bg-local md:bg-fixed" style="background-image: url('https://lh3.googleusercontent.com/d/1B1pwciO6KIr0vuyaFSOiHb3CIYW4SwiA');">
-            <div class="absolute inset-0 bg-black/10"></div>
+            <div class="absolute inset-0 bg-white/10"></div>
             <div class="relative z-10 max-w-4xl mx-auto text-center reveal">
-                <h2 class="font-cinzel text-3xl md:text-4xl text-charcoal mb-2 font-bold drop-shadow-md bg-white/30 inline-block px-6 py-2 rounded-full backdrop-blur-md border border-white/50">05 de Diciembre 2026</h2>
-                <p class="font-montserrat text-sm tracking-widest text-[#D4AF37] mb-12 uppercase font-bold drop-shadow-md mt-4">Faltan</p>
+                <h2 class="font-cinzel text-3xl md:text-4xl text-charcoal mb-2 font-bold drop-shadow-md bg-white/50 inline-block px-6 py-2 rounded-full backdrop-blur-md border border-white/50">05 de Diciembre 2026</h2>
+                
+                <div class="mt-6 mb-10">
+                    <span class="font-montserrat text-sm tracking-widest text-charcoal uppercase font-bold bg-white/40 px-6 py-2 rounded-full backdrop-blur-sm border border-white/30">Faltan</span>
+                </div>
                 
                 <div class="flex justify-center gap-4 md:gap-8 font-montserrat">
-                    <div class="glassmorphism metallic-edge w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl">
-                        <span id="days" class="text-3xl md:text-5xl font-semibold text-charcoal">00</span>
-                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-[#D4AF37] mt-2">Días</span>
+                    <div class="glassmorphism !bg-white/10 !backdrop-blur-sm metallic-edge w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl border-white/30">
+                        <span id="days" class="text-3xl md:text-5xl font-semibold text-charcoal drop-shadow-sm">00</span>
+                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-[#D4AF37] mt-2 font-bold drop-shadow-md">Días</span>
                     </div>
-                    <div class="glassmorphism metallic-edge w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl">
-                        <span id="hours" class="text-3xl md:text-5xl font-semibold text-charcoal">00</span>
-                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-[#D4AF37] mt-2">Hrs</span>
+                    <div class="glassmorphism !bg-white/10 !backdrop-blur-sm metallic-edge w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl border-white/30">
+                        <span id="hours" class="text-3xl md:text-5xl font-semibold text-charcoal drop-shadow-sm">00</span>
+                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-[#D4AF37] mt-2 font-bold drop-shadow-md">Hrs</span>
                     </div>
-                    <div class="glassmorphism metallic-edge w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl">
-                        <span id="minutes" class="text-3xl md:text-5xl font-semibold text-charcoal">00</span>
-                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-[#D4AF37] mt-2">Min</span>
+                    <div class="glassmorphism !bg-white/10 !backdrop-blur-sm metallic-edge w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl border-white/30">
+                        <span id="minutes" class="text-3xl md:text-5xl font-semibold text-charcoal drop-shadow-sm">00</span>
+                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-[#D4AF37] mt-2 font-bold drop-shadow-md">Min</span>
                     </div>
-                    <div class="glassmorphism metallic-edge w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl">
-                        <span id="seconds" class="text-3xl md:text-5xl font-semibold text-charcoal">00</span>
-                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-[#D4AF37] mt-2">Seg</span>
+                    <div class="glassmorphism !bg-white/10 !backdrop-blur-sm metallic-edge w-20 h-24 md:w-28 md:h-32 flex flex-col items-center justify-center rounded-2xl border-white/30">
+                        <span id="seconds" class="text-3xl md:text-5xl font-semibold text-charcoal drop-shadow-sm">00</span>
+                        <span class="text-[10px] md:text-xs uppercase tracking-wider text-[#D4AF37] mt-2 font-bold drop-shadow-md">Seg</span>
                     </div>
                 </div>
             </div>
@@ -380,7 +367,7 @@
                         <h3 class="font-cinzel text-2xl text-charcoal mb-2">Ceremonia Religiosa</h3>
                         <p class="font-cormorant text-2xl text-[#D4AF37] font-semibold mb-4">Parroquia de Fátima</p>
                         <p class="font-montserrat text-sm text-charcoal mb-2"><i class="far fa-calendar text-[#D4AF37] mr-2"></i>Sábado, 05 de Diciembre 2026</p>
-                        <p class="font-montserrat text-sm text-charcoal mb-6"><i class="far fa-clock text-[#D4AF37] mr-2"></i>[Hora Misa]</p>
+                        <p class="font-montserrat text-sm text-charcoal mb-6"><i class="far fa-clock text-[#D4AF37] mr-2"></i>1:00 PM</p>
                     </div>
                     <a href="https://maps.app.goo.gl/eAwcaFtfTaLeH2kZ8" target="_blank" class="inline-block w-full px-6 py-3 border border-[#D4AF37] text-[#D4AF37] font-montserrat text-xs uppercase tracking-widest rounded-full hover:bg-[#D4AF37] hover:text-white transition duration-300">Ver Mapa</a>
                 </div>
@@ -476,6 +463,11 @@
             </div>
         </section>
 
+        <!-- Banner Transición Nueva (Después del Itinerario) -->
+        <div class="w-full relative h-[60vh] md:h-[80vh] blend-both reveal">
+            <img src="https://lh3.googleusercontent.com/d/1B3Gy8M-31ZH1u1krhARHc95j66ftbjyR" class="w-full h-full object-cover object-center" alt="Novios">
+        </div>
+
         <!-- 8. Código de Vestimenta -->
         <section class="py-24 px-6 text-center reveal">
             <h2 class="font-cinzel text-4xl text-charcoal mb-8">Código de Vestimenta</h2>
@@ -483,9 +475,9 @@
                 <i class="fas fa-user-tie"></i>
                 <i class="fas fa-person-dress"></i>
             </div>
-            <p class="font-cormorant italic text-3xl text-[#D4AF37] font-semibold mb-4">Formal</p>
-            <p class="font-montserrat text-sm max-w-md mx-auto text-charcoal/80 leading-relaxed uppercase tracking-widest font-semibold">
-                Se reserva el color blanco para la novia
+            <p class="font-cormorant italic text-3xl text-[#D4AF37] font-semibold mb-6">Formal</p>
+            <p class="font-montserrat text-xs md:text-sm max-w-md mx-auto text-charcoal/80 leading-relaxed uppercase tracking-widest font-semibold">
+                Evitar usar color verde, gris (reservado para las damas y caballeros de honor) y por supuesto blanco (reservado solo para la novia).
             </p>
         </section>
 
@@ -1092,9 +1084,6 @@
 
         // --- Funciones Faltantes de Interfaz y Animación ---
         function openInvitation() {
-            const flap = document.getElementById('envelope-flap');
-            const seal = document.getElementById('envelope-seal');
-            const letter = document.getElementById('envelope-letter');
             const splash = document.getElementById('splash-screen');
             const main = document.getElementById('main-content');
             const audioContainer = document.getElementById('audio-container');
@@ -1110,36 +1099,21 @@
             }
             window.addEventListener('mousemove', handleMouseMove);
 
-            // Animación de Apertura
-            flap.style.transform = 'rotateX(180deg)';
-            seal.style.opacity = '0';
-
-            // Despliegue de la Carta
+            // Transición a la invitación (Directa desde la tarjeta plana)
+            splash.classList.add('fade-out');
             setTimeout(() => {
-                letter.style.transform = 'translateY(-80%)';
-                setTimeout(() => {
-                    letter.style.zIndex = '35'; // Pasa por encima de la pestaña
-                    letter.style.transform = 'translateY(-20%) scale(1.05)';
-                }, 300);
-            }, 500);
-
-            // Transición a la invitación
-            setTimeout(() => {
-                splash.classList.add('fade-out');
-                setTimeout(() => {
-                    splash.classList.add('hidden');
-                    main.classList.remove('hidden');
-                    audioContainer.classList.remove('hidden');
-                    
-                    // Iniciar Audio
-                    audio.play().then(() => {
-                        const bars = document.querySelectorAll('.bar');
-                        bars.forEach(bar => bar.classList.remove('paused'));
-                        window.isPlaying = true;
-                    }).catch(e => console.log("Audio autoplay bloqueado."));
-                    
-                }, 1000);
-            }, 2000);
+                splash.classList.add('hidden');
+                main.classList.remove('hidden');
+                audioContainer.classList.remove('hidden');
+                
+                // Iniciar Audio
+                audio.play().then(() => {
+                    const bars = document.querySelectorAll('.bar');
+                    bars.forEach(bar => bar.classList.remove('paused'));
+                    window.isPlaying = true;
+                }).catch(e => console.log("Audio autoplay bloqueado."));
+                
+            }, 1000);
         }
 
         function toggleAudio() {
